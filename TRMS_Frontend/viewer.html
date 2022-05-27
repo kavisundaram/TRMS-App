@@ -1,0 +1,78 @@
+<html lang="en">
+
+<head>
+    <title>View Employee Details</title>
+</head>
+
+<body>
+
+    <h1>View employee Details</h1>
+
+    <label for="idInput">Employee ID:</label>
+    <input type="number" id="idInput">
+    <button onclick="getEmp()">Done</button>
+
+    <table>
+        <tr>
+            <td><b>Employee_ID</b></td>
+            <td id="empidInput">-</td>
+        </tr>
+        <tr>
+            <td><b>Name</b></td>
+            <td id="nameInput">-</td>
+        </tr>
+        <tr>
+            <td><b>SupervisorID</b></td>
+            <td id="supidInput">-</td>
+        </tr>
+        <tr>
+            <td><b>Supervisor Name</b></td>
+            <td id="supnameInput">-</td>
+        </tr>
+        <tr>
+            <td><b>Department</b></td>
+            <td id="deptInput">-</td>
+        </tr>
+        <tr>
+            <td><b>Designation</b></td>
+            <td id="desInput">-</td>
+        </tr>
+        <tr>
+            <td><b>Email</b></td>
+            <td id="emailInput">-</td>
+        </tr>
+        
+    </table>
+
+
+</body>
+<script>
+
+    function populateTable(body) 
+    {
+        document.getElementById("empidInput").innerHTML = body.Employee_ID
+        document.getElementById("nameInput").innerHTML = body.Employee_Name
+        document.getElementById("supidInput").innerHTML = body.Supervisor_ID
+        document.getElementById("supnameInput").innerHTML = body.Supervisor_Name
+        document.getElementById("deptInput").innerHTML = body.Department
+        document.getElementById("desInput").innerHTML = body.Designation
+        document.getElementById("emailInput").innerHTML = body.Email
+    }
+
+
+    async function getEmp() 
+    {
+
+        const id = document.getElementById("idInput").value
+        const url = `http://127.0.0.1:5000/employee/${id}`
+
+        const httpResponse = await fetch(url);
+        const body = await httpResponse.json();
+
+        console.log(body);
+        populateTable(body)
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,110 @@
+<html lang="en">
+
+<head>
+    <title>Employee Details</title>
+</head>
+
+<body>
+    <h1>Employee Details</h1>
+
+    <label for="idInput">Employee_Id:</label>
+    <input type="number" id="idInput"><br>
+
+    <label for="nameInput">Name:</label>
+    <input type="text" id="nameInput"><br>
+
+    <label for="supidInput">Supervisor_id:</label>
+    <input type="number" id="supidInput"><br>
+
+    <label for="supnameInput">Supervisor Name:</label>
+    <input type="text" id="supnameInput"><br>
+
+    <label for="deptInput">Department Id:
+        <td>
+            <select name="deptInput" id="deptInput">
+                <option value="dept_id">Select your Dept</option>
+                <option value="111">111</option>
+                <option value="112">112</option>
+                <option value="113">113</option>
+                <option value="114">114</option>
+            </select>
+        </td>
+    </label><br>
+    <!-- <input type="number" id="deptInput"><br> -->
+
+    <label for="desInput">Designation:</label>
+    <input type="text" id="desInput"><br>
+
+    <label for="emailInput">Email:</label>
+    <input type="text" id="emailInput"><br>
+
+    
+    <button onclick="addEmp()"> Submit </button>
+
+</body>
+<script>
+
+    async function addEmp() 
+    {
+        console.log("Adding new employee details....")
+
+        const idVal = document.getElementById("idInput").value
+        const nameVal = document.getElementById("nameInput").value
+        const supidVal = document.getElementById("supidInput").value
+        const supnameVal = document.getElementById("supnameInput").value
+        const deptVal = document.getElementById("deptInput").value
+        const desVal = document.getElementById("desInput").value
+        const emailVal = document.getElementById("emailInput").value 
+        
+        console.log(idVal)
+        console.log(nameVal)
+        console.log(supidVal)
+        console.log(supnameVal)
+        console.log(deptVal)
+        console.log(desVal)
+        console.log(emailVal)
+
+        const data = 
+        {
+            emp_id: idVal,
+            name: nameVal,
+            supervisor_id: supidVal,
+            sup_name: supnameVal,
+            dept_id: deptVal,
+            designation: desVal,
+            email: emailVal
+        }
+
+        const url = "http://127.0.0.1:5000/employee"
+
+        const httpResponse = await fetch(url, 
+        {
+            method: "POST",
+            headers: 
+            {
+                'Content-Type': 'application/json'
+            },
+            // headers: 
+            // {
+            //     'Access-Control-Allow-Origin': "http://127.0.0.1:5000/employee"
+            // },
+
+            body: JSON.stringify(data)
+        });
+
+        const body = await httpResponse.json();
+
+        console.log(body);
+        if (body) 
+        {
+            alert("New employee Successfully Added!");
+        } else 
+        {
+            alert("Adding failed");
+        }
+
+    }
+
+</script>
+
+</html>

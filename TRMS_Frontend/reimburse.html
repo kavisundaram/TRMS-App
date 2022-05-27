@@ -1,0 +1,181 @@
+<html lang="en">
+
+<head>
+    <title>Remimbursement Form</title>
+
+    <style>
+        .header {
+            text-align: right
+        }
+
+        #myTable th,
+        #myTable td {
+            border: 2px solid black;
+            width: 33%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1> Reimbursement Form Submission </h1>
+
+    
+    <table>
+        <tr>
+            <td class="header"><label for="idInput"><b>Employee ID</b></label></td>
+            <td><input type="number" id="idInput" /></td>
+        </tr>
+        <tr>
+            <td class="header"><label for="nameInput"><b>Name</b></label></td>
+            <td><input type="text" id="nameInput" /></td>
+        </tr>
+        <tr>
+            <td class="header"><label for="supnameInput"><b>Supervisor Name</b></label></td>
+            <td><input type="text" id="supnameInput" /></td>
+        </tr>
+        <tr>
+            <td class="header"><label for="deptInput"><b>Department</b></label></td>
+            <td>
+                <select name="deptInput" id="deptInput">
+                    <option value="dept_id">Select your Dept</option>
+                    <option value="111">111</option>
+                    <option value="112">112</option>
+                    <option value="113">113</option>
+                    <option value="114">114</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="header"><label for="courseInput"><b>Course Type</b></label></td>
+                <td>
+                    <select name="courseInput" id="courseInput">
+                        <option value="course">Select Course</option>
+                        <option value="uc">University Courses</option>
+                        <option value="sem">Seminars</option>
+                        <option value="cps">Certification Preparation classes</option>
+                        <option value="cer">Certifications</option>
+                        <option value="tech">Technical training</option>
+                        <option value="others">Others</option>
+                    </select>
+                </td>
+            </td>
+        </tr>
+        <tr>
+            <td class="header"><label for="priceInput"><b>Price</b></label></td>
+            <td><input type="number" id="priceInput"/></td>
+        </tr>
+        <tr>
+            <td class="header"><label for="gradeInput"><b>Grade</b></label></td>
+            <td><input type="number" id="gradeInput"/></td>
+        </tr>
+        <tr>
+            <td class="header"><label for="amtInput"><b>Balance Amount</b></label></td>
+            <td><input type="number" id="amtInput"/></td>
+        </tr>
+        <tr>
+            <td class="header"><label for="emailInput"><b>Email Address</b></label></td>
+            <td><input type="email" id="emailInput" /></td>
+        </tr>
+        <tr>
+            <td> <br> </td>
+        </tr>
+
+        <tr>        
+            <td></td>
+            <td><button onclick="registerEmp()"><b>SUBMIT</b></button></td>
+        </tr>
+    </table>
+    <hr>
+    <br>
+
+</body>
+<script>
+
+    // let age = document.getElementById("ageInput")
+    // age.onkeyup = () => {
+        
+    //     if (age.value < 0 || age.value == "") {
+    //         age.value = 0
+    //     }
+    // }
+
+
+    let registerEmp = function () 
+    {
+
+        let idVal = document.getElementById("idInput").value
+        let nameVal = document.getElementById("nameInput").value
+        let supnameVal = document.getElementById("supnameInput").value
+        let deptVal = document.getElementById("deptInput").value
+        let courseVal = document.getElementById("courseInput").value
+        let priceVal = document.getElementById("priceInput").value
+        let gradeVal = document.getElementById("gradeInput").value
+        let amtVal = document.getElementById("amtInput").value
+        let emailVal = document.getElementById("emailInput").value
+
+        console.log(idVal)
+        console.log(nameVal)
+        console.log(supnameVal)
+        console.log(deptVal)
+        console.log(courseVal)
+        console.log(priceVal)
+        console.log(gradeVal)
+        console.log(amtVal)
+        console.log(emailVal)
+
+        const emp_data = 
+        {
+            eid: idVal,
+            e_name: nameVal,
+            s_name: supnameVal,
+            dept: deptVal,
+            course: courseVal,
+            price: priceVal,
+            grade: gradeVal,
+            amt: amtVal,
+            email_add: emailVal
+        }
+
+        console.log(emp_data)
+
+        let userJSON = JSON.stringify(emp_data)
+        console.log(userJSON)
+
+        let pretendResponse = JSON.parse(userJSON)
+
+        console.log(pretendResponse)
+
+        if (pretendResponse) 
+        {
+            alert("Successfully submitted!")
+        }
+        async function add()
+        {
+            const url = "http://127.0.0.1:5000/reimburse"
+
+            const httpResponse = await fetch(url, 
+            {
+                method: "POST",
+                headers: 
+                {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(emp_data)
+            });
+
+            const body = await httpResponse.json();
+
+            console.log(body);
+            if(body)
+            {
+                alert("Successfully submitted")
+            }
+            else
+            {
+                alert("ERROR...Failed!!")
+            }
+        }
+    }
+</script>
+</html>
